@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="D:/GITHUB Uploader/V7/V7.Api/V7.Api.csproj" />
+  <Project Path="D:/GITHUB Uploader/V7/V7.Application/V7.Application.csproj" />
+  <Project Path="D:/GITHUB Uploader/V7/V7.Domain/V7.Domain.csproj" />
+  <Project Path="D:/GITHUB Uploader/V7/V7.Infrastructure/V7.Infrastructure.csproj" />
+</Solution>
