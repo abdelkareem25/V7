@@ -62,7 +62,8 @@ namespace V7.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, ProductUpdateDto productUpdateDto)
         {
-            var product = await _productRepository.GetByIdAsync(id);
+            var spec = new ProductSpecifications(id);
+            var product = await _productRepository.GetByIdAsync(spec);
             
             if (product == null)
             {
@@ -79,7 +80,8 @@ namespace V7.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
+            var spec = new ProductSpecifications(id);
+            var product = await _productRepository.GetByIdAsync(spec);
             if (product == null)
             {
                 return NotFound();

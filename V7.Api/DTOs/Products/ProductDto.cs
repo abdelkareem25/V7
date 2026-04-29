@@ -1,13 +1,23 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace V7.Api.DTOs.Products
 {
     public class ProductDto
     {
+        [Required]
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
+        [Required]
+        public string Name { get; set; } 
+        [Required]
+        public string Description { get; set; }
+        [Required]
+        [Range(0.1, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
         public decimal Price { get; set; }
-        public string PictureUrl { get; set; } = string.Empty;
+        [Required]
+        public string PictureUrl { get; set; }
+        [Required]  
         public int CategoryId { get; set; }
-        public string CategoryName { get; set; } = string.Empty;
+        [Required]
+        public string CategoryName { get; set; }
     }
 }
