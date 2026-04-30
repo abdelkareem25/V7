@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using V7.Infrastructure.Data.Context;
 
@@ -10,9 +11,11 @@ using V7.Infrastructure.Data.Context;
 namespace V7.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(V7Db))]
-    partial class V7DbModelSnapshot : ModelSnapshot
+    [Migration("20260430063056_enterdataseed")]
+    partial class enterdataseed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

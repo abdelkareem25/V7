@@ -5,6 +5,7 @@ using V7.Domain.Entites.Identity;
 using V7.Infrastructure.Data.Context;
 using V7.Infrastructure.Identity;
 using V7.Api.Middleware;
+using V7.Infrastructure.Data;
 
 namespace V7.Api
 {
@@ -14,7 +15,7 @@ namespace V7.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            
+
             #region Configurations
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -35,16 +36,17 @@ namespace V7.Api
             using var scope = app.Services.CreateScope();
 
 
-                var services = scope.ServiceProvider;
+            var services = scope.ServiceProvider;
             var loggerFactory = services.GetRequiredService<ILoggerFactory>();
             try
             {
                 var context = services.GetRequiredService<V7Db>();
                 await context.Database.MigrateAsync();
+                //await V7DataSeed.SeedAsync(context);
                 var identityContext = services.GetRequiredService<AppIdentityDbContext>();
                 await identityContext.Database.MigrateAsync();
                 await AppIdentityDbContextSeed.SeedUserAsync(services.GetRequiredService<UserManager<AppUser>>());
-                
+
             }
             catch (Exception ex)
             {
@@ -66,11 +68,10 @@ namespace V7.Api
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.MapControllers(); 
+            app.MapControllers();
             #endregion
 
             app.Run();
         }
     }
 }
- 
