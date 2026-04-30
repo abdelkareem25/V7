@@ -13,8 +13,7 @@ namespace V7.Api.DTOs.Products
         [Required]
         [Range(0.1, double.MaxValue, ErrorMessage = "Price must be greater than 0")]
         public decimal Price { get; set; }
-        [Required]
-        public string PictureUrl { get; set; }
+        public string? PictureUrl { get; set; }
         [Required]  
         public int CategoryId { get; set; }
         [Required]

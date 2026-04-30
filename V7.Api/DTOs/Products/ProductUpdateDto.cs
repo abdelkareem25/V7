@@ -5,6 +5,8 @@ namespace V7.Api.DTOs.Products
     public class ProductUpdateDto
     {
         [Required]
+        public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
         
         [Required]

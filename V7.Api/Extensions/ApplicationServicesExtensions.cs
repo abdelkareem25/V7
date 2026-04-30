@@ -9,6 +9,7 @@ namespace V7.Api.Extensions
         {
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddAutoMapper(config => config.AddProfile(new V7.Api.Mapping.ProductProfile()));
+            services.AddAutoMapper(config => config.AddProfile(new V7.Api.Mapping.CategoryProfile()));
             
             return services;
         }

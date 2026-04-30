@@ -10,6 +10,7 @@ namespace V7.Domain.Interfaces.Specifications
 {
     public class ProductSpecifications : BaseSpecifications<Product>
     {
+        // all products with category
         public ProductSpecifications():base()
         {
             Includes.Add(p => p.Category);

@@ -19,8 +19,4 @@
     <ProjectReference Include="..\V7.Application\V7.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\Category\" />
-  </ItemGroup>
-
 </Project>
