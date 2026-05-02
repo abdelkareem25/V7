@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Interfaces\**" />
+    <Compile Remove="Mapping\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Mapping\**" />
+    <None Remove="Interfaces\**" />
+    <None Remove="Mapping\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.26" />
   </ItemGroup>
@@ -14,11 +23,6 @@
   <ItemGroup>
     <ProjectReference Include="..\V7.Domain\V7.Domain.csproj" />
     <ProjectReference Include="..\V7.Infrastructure\V7.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Mapping\" />
-    <Folder Include="Interfaces\" />
   </ItemGroup>
 
 </Project>

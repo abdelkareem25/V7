@@ -6,6 +6,7 @@ using V7.Infrastructure.Data.Context;
 using V7.Infrastructure.Identity;
 using V7.Api.Middleware;
 using V7.Infrastructure.Data;
+using StackExchange.Redis;
 
 namespace V7.Api
 {
@@ -26,6 +27,12 @@ namespace V7.Api
 
             builder.Services.AddDbContext<AppIdentityDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
+
+            builder.Services.AddSingleton<IConnectionMultiplexer>(options =>
+            {
+                var connection= builder.Configuration.GetConnectionString("RedisConnection");
+                return ConnectionMultiplexer.Connect(connection);
+            });
 
             builder.Services.AddIdentityServices(builder.Configuration);
             builder.Services.AddApplicationServices();
