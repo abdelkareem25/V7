@@ -1,6 +1,10 @@
 ﻿using AutoMapper;
 using V7.Api.DTOs.Category;
+using V7.Api.DTOs.Identity;
+using V7.Api.DTOs.Order;
 using V7.Domain.Entites;
+using V7.Domain.Entites.Cart;
+using V7.Domain.Entites.Identity;
 
 namespace V7.Api.Mapping
 {
@@ -11,6 +15,11 @@ namespace V7.Api.Mapping
             CreateMap<Category, CategoryDto>().ReverseMap();
             CreateMap<CategoryCreateDto, Category>();
             CreateMap<CategoryUpdateDto, Category>();
+
+            CreateMap<Address, AddressDto>().ReverseMap();
+
+            CreateMap<CustomerBasketDto, CustomerBasket>();
+            CreateMap<BasketItemDto, BasketItem>();
         }
     }
 }
