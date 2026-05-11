@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using V7.Api.DTOs.Category;
 using V7.Domain.Entites;
@@ -37,7 +37,7 @@ namespace V7.Api.Controllers
             var categoryDto = _mapper.Map<Category, CategoryDto>(category);
             return Ok(categoryDto);
         }
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateCategory(int id, CategoryDto categoryDto)
         {
@@ -48,7 +48,7 @@ namespace V7.Api.Controllers
             await _categoryRepository.UpdateAsync(category);
             return NoContent();
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteCategory(int id)
         {
@@ -58,7 +58,7 @@ namespace V7.Api.Controllers
             await _categoryRepository.DeleteAsync(category);
             return NoContent();
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<CategoryDto>> CreateCategory(CategoryDto categoryDto)
         { 

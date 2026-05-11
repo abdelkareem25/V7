@@ -53,6 +53,7 @@ namespace V7.Api.Controllers
 
         // Login
         // POST: api/accounts/login
+        [Authorize]
         [HttpPost("Login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto model)
         {

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using V7.Api.DTOs.Order;
 using V7.Domain.Entites.Cart;
@@ -26,6 +26,7 @@ namespace V7.Api.Controllers
         }
 
         // Update or Create
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<CustomerBasket>> UpdateBasket(CustomerBasketDto basket)
         {
@@ -39,6 +40,7 @@ namespace V7.Api.Controllers
         }
 
         // Delete
+        [Authorize]
         [HttpDelete("{basketId}")]
         public async Task<ActionResult<bool>> DeleteBasket(string basketId)
         {

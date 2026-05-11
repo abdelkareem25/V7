@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using V7.Api.DTOs.Products;
 using V7.Domain.Entites;
@@ -45,7 +46,9 @@ namespace V7.Api.Controllers
         }
 
         // POST: api/products
+        [Authorize]
         [HttpPost]
+
         public async Task<ActionResult<ProductDto>> CreateProduct(ProductCreateDto productCreateDto)
         {
             var product = _mapper.Map<ProductCreateDto, Product>(productCreateDto);
@@ -59,6 +62,7 @@ namespace V7.Api.Controllers
         }
 
         // PUT: api/products/5
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, ProductUpdateDto productUpdateDto)
         {
@@ -77,6 +81,7 @@ namespace V7.Api.Controllers
         }
 
         // DELETE: api/products/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
