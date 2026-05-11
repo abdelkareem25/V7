@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using V7.Domain.Entites;
+using V7.Domain.Entites.OrderAggregate;
 
 namespace V7.Infrastructure.Data.Context
 {
@@ -23,9 +24,17 @@ namespace V7.Infrastructure.Data.Context
                     new Category { Id = 1, Name = "Category 1" , Description = "Description for Category 1" },
                     new Category { Id = 2, Name = "Category 2", Description = "Description for Category 2" }
                 );
+            modelBuilder.Entity<DelivaryMethod>()
+                .HasData(
+                    new DelivaryMethod { Id = 1, ShortName = "Standard", Description = "Standard delivery", DeliveryTime = "5-7 days", Cost = 5.00m },
+                    new DelivaryMethod { Id = 2, ShortName = "Express", Description = "Express delivery", DeliveryTime = "1-2 days", Cost = 15.00m }
+                );
         }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<DelivaryMethod> DelivaryMethods { get; set; }
     }
 }
