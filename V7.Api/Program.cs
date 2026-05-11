@@ -1,12 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using StackExchange.Redis;
 using V7.Api.Extensions;
+using V7.Api.Middleware;
 using V7.Domain.Entites.Identity;
 using V7.Infrastructure.Data.Context;
 using V7.Infrastructure.Identity;
-using V7.Api.Middleware;
-using V7.Infrastructure.Data;
-using StackExchange.Redis;
 
 namespace V7.Api
 {
