@@ -6,6 +6,7 @@ using V7.Api.Middleware;
 using V7.Domain.Entites.Identity;
 using V7.Infrastructure.Data.Context;
 using V7.Infrastructure.Identity;
+using Microsoft.OpenApi.Models;
 
 namespace V7.Api
 {
@@ -29,12 +30,41 @@ namespace V7.Api
 
             builder.Services.AddSingleton<IConnectionMultiplexer>(options =>
             {
-                var connection= builder.Configuration.GetConnectionString("RedisConnection");
+                var connection = builder.Configuration.GetConnectionString("RedisConnection");
                 return ConnectionMultiplexer.Connect(connection);
             });
 
             builder.Services.AddIdentityServices(builder.Configuration);
             builder.Services.AddApplicationServices();
+            builder.Services.AddSwaggerGen(options =>
+            {
+
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Enter JWT Token"
+                });
+
+
+                options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+            {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+                    }
+                    });
+            });
             #endregion
             var app = builder.Build();
 
@@ -64,6 +94,7 @@ namespace V7.Api
             #endregion
 
             #region Configur HTTP Requset
+
             // Configure the HTTP request pipeline.
             app.UseMiddleware<ExceptionMiddleware>();
             if (app.Environment.IsDevelopment())
