@@ -10,5 +10,6 @@ namespace V7.Domain.Interfaces.Repositories
         Task AddAsync(T entity);
         Task UpdateAsync(T entity); 
         Task DeleteAsync(T entity);
+        Task<int> GetCountAsync(ISpecifications<T> spec);
     }
 }

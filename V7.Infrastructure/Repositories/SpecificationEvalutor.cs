@@ -14,11 +14,26 @@ namespace V7.Infrastructure.Repositories
             {
                 query = query.Where(spec.Criteria);
             }
-            if (spec.Includes != null)
+
+            if (spec.OrderBy != null)
             {
-                query = spec.Includes.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
+                query = query.OrderBy(spec.OrderBy);
             }
-            return query;
+            if (spec.OrderByDescending != null)
+            {
+                query = query.OrderByDescending(spec.OrderByDescending);
+            }
+            if (spec.IsPaginationEnabled)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
+            }
+            {
+                if (spec.Includes != null)
+                {
+                    query = spec.Includes.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
+                }
+                return query;
+            }
         }
     }
 }

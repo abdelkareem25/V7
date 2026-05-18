@@ -57,5 +57,10 @@ namespace V7.Infrastructure.Repositories
             return SpecificationEvalutor<T>.GetQuery(_db.Set<T>(), spec);
         }
 
+        public async Task<int> GetCountAsync(ISpecifications<T> spec)
+        {
+            return await ApplySpecification(spec).CountAsync();
+        }
+
     }
 }

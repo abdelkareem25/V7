@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using V7.Api.DTOs.Products;
+using V7.Api.Helper;
 using V7.Domain.Entites;
 using V7.Domain.Interfaces.Repositories;
 using V7.Domain.Interfaces.Specifications;
@@ -21,13 +22,16 @@ namespace V7.Api.Controllers
 
         // GET: api/products
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProductDto>>> GetProducts()
+        public async Task<ActionResult<Pagination<ProductDto>>> GetProducts([FromQuery] ProductSpecParams param)
         {
-            var spec = new ProductSpecifications();
+            var spec = new ProductSpecifications(param);
             var products = await _productRepository.GetAllAsync(spec);
             var productsDto = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDto>>(products);
-            return Ok(productsDto);
-        }
+            var countSpec = new ProductWithFiltrationSpec(param);
+            var count = await _productRepository.GetCountAsync(countSpec);
+
+            return Ok(new Pagination<ProductDto>(param.PageIndex, param.PageSize, products.Count, productsDto)); 
+        } 
 
         // GET: api/products/5
         [HttpGet("{id}")]
