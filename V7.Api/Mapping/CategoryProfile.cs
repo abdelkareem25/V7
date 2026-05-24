@@ -8,6 +8,7 @@ using V7.Domain.Entites.Identity;
 using V7.Domain.Entites.OrderAggregate;
 using IdentityAddress = V7.Domain.Entites.Identity.Address;
 using AggregateAddress = V7.Domain.Entites.OrderAggregate.Address;
+using V7.Api.Helper;
 
 namespace V7.Api.Mapping
 {
@@ -24,6 +25,14 @@ namespace V7.Api.Mapping
             CreateMap<CustomerBasketDto, CustomerBasket>();
             CreateMap<BasketItemDto, BasketItem>();
             CreateMap<AddressDto, AggregateAddress>();
+            CreateMap<Order, OrderToReturnDto>()
+                .ForMember(dest => dest.DeliveryMethod, o => o.MapFrom(src => src.DeliveryMethod))
+                .ForMember(dest => dest.DeliveryMethodCost, o => o.MapFrom(src => src.DeliveryMethod.Cost));
+            CreateMap<OrderItem, OrderItemDto>()
+                .ForMember(dest => dest.ProductId, o => o.MapFrom(src => src.Product.ProductId))
+                .ForMember(dest => dest.ProductName, o => o.MapFrom(src => src.Product.ProductName))
+                .ForMember(dest => dest.ProductUrl, o => o.MapFrom(src => src.Product.ProductUrl))
+                .ForMember(dest => dest.ProductUrl, o => o.MapFrom<OrderItemPictureUrlResolver>());
         }
     }
 }

@@ -24,15 +24,7 @@ namespace V7.Infrastructure.Repositories
         {
             return await ApplySpecification(spec).FirstOrDefaultAsync();
         }
-        //public async Task<IReadOnlyList<T>> GetAllAsync()
-        //{
-        //    return aw ait _db.Set<T>().ToListAsync();
-        //}
-
-        //public async Task<T> GetByIdAsync(int id)
-        //{
-        //    return await _db.Set<T>().FindAsync(id);
-        //}
+        
         
         public async Task AddAsync(T entity)
         => await _db.Set<T>().AddAsync(entity);

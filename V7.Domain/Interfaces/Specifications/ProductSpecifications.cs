@@ -7,9 +7,9 @@ namespace V7.Domain.Interfaces.Specifications
         // all products with category
         public ProductSpecifications(ProductSpecParams param) :
             base(p =>
-            (string.IsNullOrEmpty(param.Search)||p.Name.ToLower().Contains(param.Search))
+            (string.IsNullOrEmpty(param.Search)||p.Name.ToLower().Contains(param.Search)) // search by name
             &&
-            (!param.categoryId.HasValue || p.CategoryId == param.categoryId) 
+            (!param.categoryId.HasValue || p.CategoryId == param.categoryId)  // filter by category
             )
         {
             Includes.Add(p => p.Category);

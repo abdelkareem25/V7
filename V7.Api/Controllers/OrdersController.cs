@@ -39,23 +39,25 @@ namespace V7.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<IReadOnlyList<Order>>> GetOrdersForUser()
+        public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrdersForUser()
         {
             var BuyerEmail = User.FindFirstValue(ClaimTypes.Email);
             var Orders = await _orderService.GetOrdersForSpecificUserAsync(BuyerEmail);
             if(Orders == null) return NotFound();
-            return Ok(Orders);
+            var MappedOrders = _mapper.Map<IReadOnlyList<Order>, IReadOnlyList<OrderToReturnDto>>(Orders);
+            return Ok(MappedOrders);
         }
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<Order>> GetOrderByIdForUser(int id)
+        public async Task<ActionResult<OrderToReturnDto>> GetOrderByIdForUser(int id)
         {
             var BuyerEmail = User.FindFirstValue(ClaimTypes.Email);
             var Order = await _orderService.GetOrderByIdForSpecificUserAsync(BuyerEmail, id);
             if(Order == null) return NotFound();
-            return Ok(Order);
+            var MappedOrder = _mapper.Map<Order, OrderToReturnDto>(Order);
+            return Ok(MappedOrder);
         }
 
         [HttpGet("DeliveryMethods")]
