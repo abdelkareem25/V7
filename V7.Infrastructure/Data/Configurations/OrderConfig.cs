@@ -14,7 +14,7 @@ namespace V7.Infrastructure.Data.Configurations
 
             builder.OwnsOne(Ad => Ad.ShippingAddress, x => x.WithOwner()); // Mapping the owned type ShippingAddress as a separate table with a foreign key to the Order table. The WithOwner() method specifies that the ShippingAddress is owned by the Order entity, and it will be stored in a separate table with a foreign key relationship to the Order table.
 
-            builder.HasOne(O=>O.DelivaryMethod)
+            builder.HasOne(O=>O.DeliveryMethod)
                 .WithMany()
                 .OnDelete(DeleteBehavior.NoAction);
         }

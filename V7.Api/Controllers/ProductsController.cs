@@ -4,19 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 using V7.Api.DTOs.Products;
 using V7.Api.Helper;
 using V7.Domain.Entites;
-using V7.Domain.Interfaces.Repositories;
+using V7.Domain.Interfaces;
 using V7.Domain.Interfaces.Specifications;
 
 namespace V7.Api.Controllers
 {
     public class ProductsController : ApiBaseController
     {
-        private readonly IGenericRepository<Product> _productRepository;
+        
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ProductsController(IGenericRepository<Product> productRepository, IMapper mapper)
+        public ProductsController(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _productRepository = productRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
@@ -25,10 +26,10 @@ namespace V7.Api.Controllers
         public async Task<ActionResult<Pagination<ProductDto>>> GetProducts([FromQuery] ProductSpecParams param)
         {
             var spec = new ProductSpecifications(param);
-            var products = await _productRepository.GetAllAsync(spec);
+            var products = await _unitOfWork.Repository<Product>().GetAllAsync(spec);
             var productsDto = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDto>>(products);
             var countSpec = new ProductWithFiltrationSpec(param);
-            var count = await _productRepository.GetCountAsync(countSpec);
+            var count = await _unitOfWork.Repository<Product>().GetCountAsync(countSpec);
 
             return Ok(new Pagination<ProductDto>(param.PageIndex, param.PageSize, products.Count, productsDto)); 
         } 
@@ -38,7 +39,7 @@ namespace V7.Api.Controllers
         public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
             var spec = new ProductSpecifications(id);
-            var product = await _productRepository.GetByIdAsync(spec);
+            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(spec);
 
             if (product == null)
             {
@@ -57,7 +58,7 @@ namespace V7.Api.Controllers
         {
             var product = _mapper.Map<ProductCreateDto, Product>(productCreateDto);
             
-            await _productRepository.AddAsync(product);
+            await _unitOfWork.Repository<Product>().AddAsync(product);
             
             // Reload product to get category details if needed, but for now just return
             var productToReturn = _mapper.Map<Product, ProductDto>(product);
@@ -71,7 +72,7 @@ namespace V7.Api.Controllers
         public async Task<IActionResult> UpdateProduct(int id, ProductUpdateDto productUpdateDto)
         {
             var spec = new ProductSpecifications(id);
-            var product = await _productRepository.GetByIdAsync(spec);
+            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(spec);
             
             if (product == null)
             {
@@ -79,7 +80,7 @@ namespace V7.Api.Controllers
             }
 
             _mapper.Map(productUpdateDto, product);
-            await _productRepository.UpdateAsync(product);
+            await _unitOfWork.Repository<Product>().UpdateAsync(product);
 
             return NoContent();
         }
@@ -90,13 +91,13 @@ namespace V7.Api.Controllers
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var spec = new ProductSpecifications(id);
-            var product = await _productRepository.GetByIdAsync(spec);
+            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(spec);
             if (product == null)
             {
                 return NotFound();
             }
 
-            await _productRepository.DeleteAsync(product);
+            await _unitOfWork.Repository<Product>().DeleteAsync(product);
 
             return NoContent();
         }

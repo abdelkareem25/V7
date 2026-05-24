@@ -35,10 +35,7 @@ namespace V7.Infrastructure.Repositories
         //}
         
         public async Task AddAsync(T entity)
-        {
-            await _db.Set<T>().AddAsync(entity);
-            await _db.SaveChangesAsync();
-        }
+        => await _db.Set<T>().AddAsync(entity);
 
         public async Task DeleteAsync(T entity)
         {
@@ -62,5 +59,13 @@ namespace V7.Infrastructure.Repositories
             return await ApplySpecification(spec).CountAsync();
         }
 
+        public async Task<T> GetByIdAsync(int id)
+        {
+            return await _db.Set<T>().FindAsync(id);
+        }
+
+        public async Task<IReadOnlyList<T>> GetAllAsync()
+        =>await _db.Set<T>().ToListAsync();
+        
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using V7.Infrastructure.Data.Context;
 
@@ -11,9 +12,11 @@ using V7.Infrastructure.Data.Context;
 namespace V7.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(V7Db))]
-    partial class V7DbModelSnapshot : ModelSnapshot
+    [Migration("20260524030907_DelivaryMethodDataSeed")]
+    partial class DelivaryMethodDataSeed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,14 +51,14 @@ namespace V7.Infrastructure.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "liquids meant for human consumption, ranging from refreshing hydration to flavorful indulgence",
-                            Name = "Drinks"
+                            Description = "Description for Category 1",
+                            Name = "Category 1"
                         },
                         new
                         {
                             Id = 2,
-                            Description = "edible substances that provide nutritional support for the body, encompassing a wide variety of flavors and textures",
-                            Name = "Food"
+                            Description = "Description for Category 2",
+                            Name = "Category 2"
                         });
                 });
 
@@ -203,25 +206,25 @@ namespace V7.Infrastructure.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            Description = "a refreshing, chilled coffee beverage made by brewing hot coffee (like drip or espresso) and pouring it over ice or chilling it",
-                            Name = "Iced Coffee",
+                            Description = "Description for Product 1",
+                            Name = "Product 1",
                             Price = 10.99m
                         },
                         new
                         {
                             Id = 2,
                             CategoryId = 1,
-                            Description = "a soothing, warm beverage made by steeping tea leaves in hot water",
-                            Name = "Hot Tea",
+                            Description = "Description for Product 2",
+                            Name = "Product 2",
                             Price = 19.99m
                         },
                         new
                         {
                             Id = 3,
                             CategoryId = 2,
-                            Description = "a rich, creamy cheese made from milk and cream",
-                            Name = "Cream cheese",
-                            Price = 15.99m
+                            Description = "Description for Product 3",
+                            Name = "Product 3",
+                            Price = 5.99m
                         });
                 });
 

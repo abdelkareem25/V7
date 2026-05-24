@@ -17,5 +17,8 @@ namespace V7.Api.DTOs.Products
         
         [Required]
         public int CategoryId { get; set; }
+
+        [Required]
+        public string? CategoryName { get; set; }
     }
 }

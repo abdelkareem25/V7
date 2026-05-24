@@ -1,12 +1,12 @@
 ﻿namespace V7.Domain.Entites.OrderAggregate
 {
-    public class DelivaryMethod : BaseEntity
+    public class DeliveryMethod : BaseEntity
     {
-        public DelivaryMethod()
+        public DeliveryMethod()
         {
             
         }
-        public DelivaryMethod(string shortName, string description, string deliveryTime, decimal cost)
+        public DeliveryMethod(string shortName, string description, string deliveryTime, decimal cost)
         {
             ShortName = shortName;
             Description = description;
