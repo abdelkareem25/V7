@@ -10,7 +10,9 @@ namespace V7.Domain.Entites.Cart
     {
         public string Id { get; set; }
         public List<BasketItem> Items { get; set; }
-
+        public int? DeliveryMethodId { get; set; }
+        public string PaymentIntentId { get; set; }
+        public string ClientSecret { get; set; }
         public CustomerBasket(string id)
         {
             Id = id;

@@ -6,12 +6,13 @@
         {
             
         }
-        public Order(string buyerEmail, Address shippingAddress, DeliveryMethod delivaryMethod, ICollection<OrderItem> items, decimal subtotal)
+        public Order(string buyerEmail, Address shippingAddress, DeliveryMethod delivaryMethod, ICollection<OrderItem> items, decimal subtotal, string paymentIntentId)
         {
             BuyerEmail = buyerEmail;
             ShippingAddress = shippingAddress;
             DeliveryMethod = delivaryMethod;
             Items = items;
+            PaymentIntentId = paymentIntentId;
             Subtotal = subtotal;
         }
 

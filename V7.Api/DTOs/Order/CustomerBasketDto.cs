@@ -6,6 +6,9 @@ namespace V7.Api.DTOs.Order
     {
         [Required]
         public string Id { get; set; }
+        public string PaymentIntentId { get; set; }
+        public string ClientSecret { get; set; }
+        public int? DeliveryMethodId { get; set; }
         public List<BasketItemDto> Items { get; set; }
     }
 }

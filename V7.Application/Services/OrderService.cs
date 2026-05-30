@@ -4,6 +4,7 @@ using V7.Domain.Interfaces;
 using V7.Domain.Interfaces.Repositories;
 using V7.Domain.Interfaces.Services;
 using V7.Domain.Interfaces.Specifications.Order_spec;
+using V7.Domain.Interfaces.Specifications.Order_Spec;
 
 namespace V7.Application.Services
 {
@@ -11,12 +12,15 @@ namespace V7.Application.Services
     {
         private readonly IBasketRepository _basketRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IPaymentService _paymentService;
 
         public OrderService(IBasketRepository basketRepository
-            , IUnitOfWork unitOfWork)
+            , IUnitOfWork unitOfWork
+            , IPaymentService paymentService)
         {
             _basketRepository = basketRepository;
             _unitOfWork = unitOfWork;
+            _paymentService = paymentService;
         }
         public async Task<Order?> CreateOrderAsync(string BuyerEmail, string BasketId, int DeleviryMethodId, Address ShippingAddress)
         {
@@ -41,7 +45,16 @@ namespace V7.Application.Services
             var DeliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(DeleviryMethodId);
 
             // Create a new order using the retrieved information
-            var Order = new Order(BuyerEmail, ShippingAddress, DeliveryMethod, OrderItems, Subtotal);
+
+            var spec = new OrderWithPaymentIntentSpec(Basket.PaymentIntentId);
+            var ExOrder = await _unitOfWork.Repository<Order>().GetEntityAsync(spec);
+
+            if (ExOrder != null)
+            {
+                await _unitOfWork.Repository<Order>().DeleteAsync(ExOrder);
+                await _paymentService.CreateOrUpdatePaymentIntent(BasketId);
+            }
+            var Order = new Order(BuyerEmail, ShippingAddress, DeliveryMethod, OrderItems, Subtotal, Basket.PaymentIntentId);
             // add the order to the database using the order repository
              await _unitOfWork.Repository<Order>().AddAsync(Order);
 
@@ -62,7 +75,7 @@ namespace V7.Application.Services
         public async Task<Order> GetOrderByIdForSpecificUserAsync(string BuyerEmail, int OrderId)
         {
             var spec = new OrderSpecifications(OrderId, BuyerEmail);
-            var Order = await _unitOfWork.Repository<Order>().GetByIdAsync(spec);
+            var Order = await _unitOfWork.Repository<Order>().GetEntityAsync(spec);
             return Order;
         }
 

@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using StackExchange.Redis;
 using V7.Api.Extensions;
 using V7.Api.Middleware;
 using V7.Domain.Entites.Identity;
 using V7.Infrastructure.Data.Context;
 using V7.Infrastructure.Identity;
-using Microsoft.OpenApi.Models;
 
 namespace V7.Api
 {
@@ -35,6 +35,7 @@ namespace V7.Api
             });
 
             builder.Services.AddIdentityServices(builder.Configuration);
+
             builder.Services.AddApplicationServices();
             builder.Services.AddSwaggerGen(options =>
             {
@@ -64,6 +65,16 @@ namespace V7.Api
             Array.Empty<string>()
                     }
                     });
+            });
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("MyPolicy", Options =>
+                {
+                    Options.AllowAnyHeader();
+                    Options.AllowAnyMethod();
+                    Options.AllowAnyOrigin();
+
+                });
             });
             #endregion
             var app = builder.Build();
@@ -103,6 +114,7 @@ namespace V7.Api
                 app.UseSwaggerUI();
             }
             app.UseHttpsRedirection();
+            app.UseCors("MyPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();

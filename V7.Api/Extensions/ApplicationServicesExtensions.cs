@@ -13,6 +13,7 @@ namespace V7.Api.Extensions
         {
 
             services.AddScoped<IOrderService,OrderService>();
+            services.AddScoped<IPaymentService, PaymentService>();
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddAutoMapper(config => config.AddProfile(new V7.Api.Mapping.ProductProfile()));

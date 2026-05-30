@@ -32,7 +32,7 @@ namespace V7.Api.Controllers
         public async Task<ActionResult<CategoryDto>> GetById(int id)
         {
             var spec = new CategoryWithProductsSpecification(id);
-            var category = await _categoryRepository.GetByIdAsync(spec);
+            var category = await _categoryRepository.GetEntityAsync(spec);
             if (category == null) return NotFound();
             var categoryDto = _mapper.Map<Category, CategoryDto>(category);
             return Ok(categoryDto);
@@ -42,7 +42,7 @@ namespace V7.Api.Controllers
         public async Task<ActionResult> UpdateCategory(int id, CategoryDto categoryDto)
         {
             var spec = new CategoryWithProductsSpecification(id);
-            var category = await _categoryRepository.GetByIdAsync(spec);
+            var category = await _categoryRepository.GetEntityAsync(spec);
             if (category == null) return NotFound();
             _mapper.Map(categoryDto, category);
             await _categoryRepository.UpdateAsync(category);
@@ -53,7 +53,7 @@ namespace V7.Api.Controllers
         public async Task<ActionResult> DeleteCategory(int id)
         {
             var spec = new CategoryWithProductsSpecification(id);
-            var category = await _categoryRepository.GetByIdAsync(spec);
+            var category = await _categoryRepository.GetEntityAsync(spec);
             if (category == null) return NotFound();
             await _categoryRepository.DeleteAsync(category);
             return NoContent();

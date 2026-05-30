@@ -22,7 +22,7 @@ namespace V7.Api.Mapping
 
             CreateMap<IdentityAddress, AddressDto>().ReverseMap();
 
-            CreateMap<CustomerBasketDto, CustomerBasket>();
+            CreateMap<CustomerBasketDto, CustomerBasket>().ReverseMap();
             CreateMap<BasketItemDto, BasketItem>();
             CreateMap<AddressDto, AggregateAddress>();
             CreateMap<Order, OrderToReturnDto>()

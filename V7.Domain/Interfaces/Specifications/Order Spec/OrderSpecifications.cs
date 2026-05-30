@@ -21,5 +21,6 @@ namespace V7.Domain.Interfaces.Specifications.Order_spec
             Includes.Add(o => o.DeliveryMethod);
             Includes.Add(o => o.Items);
         }
+         
     }
 }

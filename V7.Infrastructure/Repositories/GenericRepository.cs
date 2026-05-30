@@ -20,7 +20,7 @@ namespace V7.Infrastructure.Repositories
             return await ApplySpecification(spec).ToListAsync();
         }
 
-        public async Task<T> GetByIdAsync(ISpecifications<T> spec)
+        public async Task<T> GetEntityAsync(ISpecifications<T> spec)
         {
             return await ApplySpecification(spec).FirstOrDefaultAsync();
         }
@@ -32,13 +32,13 @@ namespace V7.Infrastructure.Repositories
         public async Task DeleteAsync(T entity)
         {
             _db.Set<T>().Remove(entity);
-            await _db.SaveChangesAsync();
+            //await _db.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(T entity)
         {
             _db.Set<T>().Update(entity);
-            await _db.SaveChangesAsync();
+            //await _db.SaveChangesAsync();
         }
 
         private IQueryable<T> ApplySpecification(ISpecifications<T> spec)
@@ -58,6 +58,7 @@ namespace V7.Infrastructure.Repositories
 
         public async Task<IReadOnlyList<T>> GetAllAsync()
         =>await _db.Set<T>().ToListAsync();
+
         
     }
 }

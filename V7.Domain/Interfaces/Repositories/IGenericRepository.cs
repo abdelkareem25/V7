@@ -7,7 +7,7 @@ namespace V7.Domain.Interfaces.Repositories
     {
         Task<IReadOnlyList<T>>GetAllAsync(ISpecifications<T> spec);
         Task<IReadOnlyList<T>>GetAllAsync();
-        Task<T> GetByIdAsync(ISpecifications<T> spec);
+        Task<T> GetEntityAsync(ISpecifications<T> spec);
         Task AddAsync(T entity);
         Task UpdateAsync(T entity); 
         Task DeleteAsync(T entity);

@@ -39,7 +39,7 @@ namespace V7.Api.Controllers
         public async Task<ActionResult<ProductDto>> GetProduct(int id)
         {
             var spec = new ProductSpecifications(id);
-            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(spec);
+            var product = await _unitOfWork.Repository<Product>().GetEntityAsync(spec);
 
             if (product == null)
             {
@@ -72,7 +72,7 @@ namespace V7.Api.Controllers
         public async Task<IActionResult> UpdateProduct(int id, ProductUpdateDto productUpdateDto)
         {
             var spec = new ProductSpecifications(id);
-            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(spec);
+            var product = await _unitOfWork.Repository<Product>().GetEntityAsync(spec);
             
             if (product == null)
             {
@@ -91,7 +91,7 @@ namespace V7.Api.Controllers
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var spec = new ProductSpecifications(id);
-            var product = await _unitOfWork.Repository<Product>().GetByIdAsync(spec);
+            var product = await _unitOfWork.Repository<Product>().GetEntityAsync(spec);
             if (product == null)
             {
                 return NotFound();
